@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-const TextSender: React.FC = () => {
+interface TextSenderProps {
+  onSend: (text: string) => void;
+}
+
+const TextSender: React.FC<TextSenderProps> = ({ onSend }) => {
   const [text, setText] = useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -11,6 +15,10 @@ const TextSender: React.FC = () => {
 
   const handleSend = () => {
     console.log("Text sent:", text);
+    if (onSend) {
+      console.log("sending");
+      onSend(text);
+    }
     setText("");
   };
 

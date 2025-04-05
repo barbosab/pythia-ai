@@ -27,7 +27,12 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, sender }) => {
           textAlign: isUser ? "right" : "left",
         }}
       >
-        {message}
+        {message?.split("\n").map((line, index) => (
+          <React.Fragment key={index}>
+            {line}
+            <br />
+          </React.Fragment>
+        ))}
       </Card>
     </div>
   );

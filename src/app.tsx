@@ -37,7 +37,6 @@ window.electronAPI.onOllamaRun((event, data) => {
     return;
   }
   if (data.content.done) {
-    console.log("it got loaded");
     return;
   }
   //   statusMsg.textContent = data.content;

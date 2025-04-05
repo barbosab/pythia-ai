@@ -48,7 +48,7 @@ const MainView: React.FC = () => {
       style={{
         padding: "20px",
         backgroundColor: "rgba(106, 13, 173, 0.3)", // RGB values of 6A0DAD with 0.2 opacity
-        height: "100vh",
+        minHeight: "100vh",
       }}
     >
       <TextHistory questions={questions} answers={answers} />

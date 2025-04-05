@@ -27,17 +27,3 @@ window.electronAPI.onOllamaServe((event, data) => {
   }
   window.electronAPI.runOllama();
 });
-
-// 3. Monitor the run status
-window.electronAPI.onOllamaRun((event, data) => {
-  if (!data.success) {
-    // initalSpinner.style.display = "none";
-    // statusMsg.textContent = "Error: " + data.content;
-    console.log("Error 2");
-    return;
-  }
-  if (data.content.done) {
-    return;
-  }
-  //   statusMsg.textContent = data.content;
-});

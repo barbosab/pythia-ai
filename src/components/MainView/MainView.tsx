@@ -23,22 +23,29 @@ const MainView: React.FC = () => {
 
   let response = "";
 
-  window.electronAPI.onChatReply((event, data) => {
-    if (!data.success) {
-      console.log("Error: " + data.content);
-      return;
-    }
+  useEffect(() => {
+    window.electronAPI.onChatReply((event, data) => {
+      if (!data.success) {
+        console.log("Error: " + data.content);
+        return;
+      }
 
-    if (data.content.message.content) {
-      response = bufferResponse(response, data.content.message.content);
-    }
+      if (data.content.message.content) {
+        response = bufferResponse(response, data.content.message.content);
+      }
 
-    if (data.content.done) {
-      addAnswer(response);
-      setAnswers([...getAnswers()]);
-      setSending(false);
-    }
-  });
+      if (data.content.done) {
+        console.log("content done");
+        console.log(data);
+        addAnswer(response);
+        setAnswers([...getAnswers()]);
+        setSending(false);
+        response = "";
+        console.log(getAnswers());
+        console.log(getQuestions());
+      }
+    });
+  }, []);
 
   return (
     <div style={{ padding: "20px" }}>

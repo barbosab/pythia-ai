@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import TextSendingPlaceholder from "../TextSendingPlaceholder/TextSendingPlaceholder";
 
 interface TextSenderProps {
   onSend: (text: string) => void;
@@ -22,7 +23,11 @@ const TextSender: React.FC<TextSenderProps> = ({ onSend, isSending }) => {
   };
 
   if (isSending) {
-    return <div>Sending...</div>;
+    return (
+      <div>
+        <TextSendingPlaceholder />
+      </div>
+    );
   }
 
   return (

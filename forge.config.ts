@@ -15,6 +15,7 @@ import path from "path";
 
 const config: ForgeConfig = {
   packagerConfig: {
+    icon: "./src/images/pythia_purple",
     asar: true,
     extraResource: [
       path.join(__dirname, "/src/service/ollama/runners/ollama-darwin"),

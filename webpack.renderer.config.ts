@@ -8,6 +8,19 @@ rules.push({
   use: [{ loader: "style-loader" }, { loader: "css-loader" }],
 });
 
+rules.push({
+  test: /\.(png|jp(e*)g|svg)$/,
+  use: [
+    {
+      loader: "url-loader",
+      options: {
+        limit: 800,
+        name: "images/[hash]-[name].[ext]",
+      },
+    },
+  ],
+});
+
 export const rendererConfig: Configuration = {
   module: {
     rules,

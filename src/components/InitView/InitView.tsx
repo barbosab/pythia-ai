@@ -1,8 +1,12 @@
 import React from "react";
-
 import Img from "../../images/pythia.png";
+import { Typography } from "@mui/material";
 
-const InitView: React.FC = () => {
+interface InitViewProps {
+  statusText: string;
+}
+
+const InitView: React.FC<InitViewProps> = ({ statusText }) => {
   return (
     <div
       style={{
@@ -18,8 +22,14 @@ const InitView: React.FC = () => {
       <img
         src={Img}
         alt="Loading"
-        style={{ width: "250px", height: "250px", marginBottom: "20px" }}
+        style={{ width: "200px", height: "200px", marginBottom: "20px" }}
       />
+      <Typography
+        variant="h6"
+        style={{ textAlign: "center", color: "#FFD700" }}
+      >
+        {statusText}
+      </Typography>
     </div>
   );
 };

@@ -8,20 +8,18 @@ const App: React.FC = () => {
 
   window.electronAPI.onOllamaRun((event, data) => {
     if (!data.success) {
-      // initalSpinner.style.display = "none";
-      // statusMsg.textContent = "Error: " + data.content;
-      console.log("Error 2 in the app");
+      console.log("TODO - error in onOllamaRun in App.tsx");
       return;
     }
     if (data.content.done) {
-      console.log("DONE in the app");
       setLoading(false);
       return;
     }
-    //   statusMsg.textContent = data.content;
   });
 
-  return <div>{loading ? <InitView /> : <MainView />}</div>;
+  return (
+    <div>{loading ? <InitView statusText="Initializing" /> : <MainView />}</div>
+  );
 };
 
 export default App;

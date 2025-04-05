@@ -22,8 +22,8 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, sender }) => {
           maxWidth: "70%",
           padding: "10px 15px",
           borderRadius: "15px",
-          backgroundColor: isUser ? "#2C3E50" : "#D3D3D3",
-          color: isUser ? "#FFFFFF" : "#000000",
+          backgroundColor: isUser ? "#2C3E50" : "#228B22",
+          color: isUser ? "#FFFFFF" : "#FFFFFF",
           textAlign: isUser ? "right" : "left",
         }}
       >

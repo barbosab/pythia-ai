@@ -35,14 +35,10 @@ const MainView: React.FC = () => {
       }
 
       if (data.content.done) {
-        console.log("content done");
-        console.log(data);
         addAnswer(response);
         setAnswers([...getAnswers()]);
         setSending(false);
         response = "";
-        console.log(getAnswers());
-        console.log(getQuestions());
       }
     });
   }, []);

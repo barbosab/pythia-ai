@@ -22,6 +22,13 @@ const TextSender: React.FC<TextSenderProps> = ({ onSend, isSending }) => {
     setText("");
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleSend();
+    }
+  };
+
   if (isSending) {
     return (
       <div>
@@ -31,24 +38,23 @@ const TextSender: React.FC<TextSenderProps> = ({ onSend, isSending }) => {
   }
 
   return (
-    <div>
+    <div style={{ maxWidth: "800px", margin: "0 auto", paddingTop: "32px" }}>
       <TextField
-        label="Enter your text"
+        label="Enter your text and hit enter to send"
         multiline
         rows={4}
         value={text}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         variant="outlined"
         fullWidth
+        sx={{
+          borderRadius: "16px", // Add rounded corners
+          "& .MuiOutlinedInput-root": {
+            borderRadius: "16px", // Ensure the input itself has rounded corners
+          },
+        }}
       />
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleSend}
-        style={{ marginTop: "10px" }}
-      >
-        Send
-      </Button>
     </div>
   );
 };

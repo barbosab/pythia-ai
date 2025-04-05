@@ -1,1 +1,1 @@
-# personal-ai
+# pythia-ai

@@ -68,12 +68,12 @@ class OllamaOrchestrator {
           os.homedir(),
           "Library",
           "Application Support",
-          "personal-ai",
+          "pythia-ai",
         );
         break;
       case "linux":
         exe = "ollama-linux"; // x64 only
-        appDataPath = path.join(os.homedir(), ".config", "personalai");
+        appDataPath = path.join(os.homedir(), ".config", "pythiaai");
         break;
       default:
         logErr(`unsupported platform: ${process.platform}`);

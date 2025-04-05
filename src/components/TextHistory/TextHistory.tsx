@@ -1,4 +1,5 @@
 import React from "react";
+import ChatMessage from "../ChatMessage/ChatMessage";
 
 interface TextHistoryProps {
   questions: string[];
@@ -10,8 +11,8 @@ const TextHistory: React.FC<TextHistoryProps> = ({ questions, answers }) => {
     <div>
       {questions.map((question, index) => (
         <div key={index}>
-          <div>{question}</div>
-          <div>{answers[index]}</div>
+          <ChatMessage message={question} sender={"user"} />
+          <ChatMessage message={answers[index]} sender={"bot"} />
         </div>
       ))}
     </div>

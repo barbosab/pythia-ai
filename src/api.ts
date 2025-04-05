@@ -73,15 +73,12 @@ export async function sendChat(
   msg: any,
 ) {
   let prompt = msg;
-  console.log("I AM IN HERE!!!");
 
   try {
     await chat(model, prompt, (json: any) => {
-      console.log("inside the await loop");
       // Reply with the content every time we receive data
       event.reply("chat:reply", { success: true, content: json });
     });
-    console.log("After await chat");
   } catch (err) {
     console.log(err);
     event.reply("chat:reply", { success: false, content: err.message });

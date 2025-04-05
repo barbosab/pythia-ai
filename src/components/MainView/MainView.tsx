@@ -3,8 +3,7 @@ import TextSender from "../TextSender/TextSender";
 
 const handleSend = (text: string) => {
   console.log("Text received in MainView:", text);
-
-  window.electronAPI.sendChat("some data");
+  window.electronAPI.sendChat(text);
 };
 
 const MainView: React.FC = () => {

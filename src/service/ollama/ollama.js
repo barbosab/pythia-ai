@@ -1,10 +1,11 @@
-const fs = require("fs");
-const os = require("os");
-const path = require("path");
-const { exec } = require("child_process");
-const { logInfo, logErr } = require("../logger.js");
+import fs from "fs";
+import os from "os";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+import { exec } from "child_process";
+import { logInfo, logErr } from "../logger.js";
 
-var OllamaServeType = {
+export const OllamaServeType = {
   SYSTEM: "system", // ollama is installed on the system
   PACKAGED: "packaged", // ollama is packaged with the app
 };
@@ -24,7 +25,6 @@ class OllamaOrchestrator {
       const ollamaModule = await import("ollama");
       this.instance = new this(ollamaModule);
     }
-    console.log(this.instance);
     return this.instance;
   }
 
@@ -81,8 +81,21 @@ class OllamaOrchestrator {
         return;
     }
 
-    const pathToBinary = path.join(__dirname, "runners", exe);
+    // Find Path to the binary
+    // TODO - this might need reworking for production
+    let basePath = process["resourcesPath"];
+    if (process.env.NODE_ENV === "development") {
+      console.log("Running in development mode");
+      const __filename = fileURLToPath(import.meta.url);
+      basePath = path.join(dirname(__filename), "runners");
+    } else {
+      console.log("Running in production mode");
+      basePath = process["resourcesPath"];
+    }
+
+    const pathToBinary = path.join(basePath, exe);
     logInfo(`Ollama pathtobinary: ${pathToBinary}`);
+
     try {
       await this.execServe(pathToBinary, appDataPath);
       return OllamaServeType.PACKAGED;
@@ -231,6 +244,10 @@ class OllamaOrchestrator {
    * @return {Promise<undefined>}
    */
   async chat(model, prompt, fn) {
+    console.log("Ollama Chat");
+    console.log(model);
+    console.log(prompt);
+
     this.messages.push({
       role: "user",
       content: prompt,
@@ -269,37 +286,28 @@ class OllamaOrchestrator {
   }
 }
 
-async function run(model, fn) {
+export async function run(model, fn) {
   const ollama = await OllamaOrchestrator.getOllama();
   return await ollama.run(model, fn);
 }
 
-async function chat(model, prompt, fn) {
+export async function chat(model, prompt, fn) {
   console.log("chat(model, prompt, fn)");
   const ollama = await OllamaOrchestrator.getOllama();
   return await ollama.chat(model, prompt, fn);
 }
 
-async function abort() {
+export async function abort() {
   const ollama = await OllamaOrchestrator.getOllama();
   return ollama.abortRequest();
 }
 
-async function stopProcess() {
+export async function stopProcess() {
   const ollama = await OllamaOrchestrator.getOllama();
   return ollama.stop();
 }
 
-async function serve() {
-  console.log("in ollama.js serve");
+export async function serve() {
   const ollama = await OllamaOrchestrator.getOllama();
-  return ollama.serve();
+  return await ollama.serve();
 }
-
-module.exports = {
-  run,
-  chat,
-  abort,
-  stopProcess,
-  serve,
-};

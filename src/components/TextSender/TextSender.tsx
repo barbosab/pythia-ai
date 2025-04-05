@@ -14,9 +14,7 @@ const TextSender: React.FC<TextSenderProps> = ({ onSend }) => {
   };
 
   const handleSend = () => {
-    console.log("Text sent:", text);
     if (onSend) {
-      console.log("sending");
       onSend(text);
     }
     setText("");

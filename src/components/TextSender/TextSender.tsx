@@ -37,7 +37,14 @@ const TextSender: React.FC<TextSenderProps> = ({ onSend, isSending }) => {
   }
 
   return (
-    <div style={{ maxWidth: "800px", margin: "0 auto", paddingTop: "32px" }}>
+    <div
+      style={{
+        maxWidth: "800px",
+        margin: "0 auto",
+        paddingTop: "32px",
+        paddingBottom: "32px",
+      }}
+    >
       <TextField
         label="Enter your text and hit enter to send"
         multiline

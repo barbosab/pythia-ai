@@ -42,9 +42,3 @@ window.electronAPI.onOllamaRun((event, data) => {
   }
   //   statusMsg.textContent = data.content;
 });
-
-window.electronAPI.onChatReply((event, data) => {
-  if (data.content.message.content) {
-    console.log(data.content.message.content);
-  }
-});

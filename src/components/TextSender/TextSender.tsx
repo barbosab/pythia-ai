@@ -4,9 +4,10 @@ import Button from "@mui/material/Button";
 
 interface TextSenderProps {
   onSend: (text: string) => void;
+  isSending: boolean;
 }
 
-const TextSender: React.FC<TextSenderProps> = ({ onSend }) => {
+const TextSender: React.FC<TextSenderProps> = ({ onSend, isSending }) => {
   const [text, setText] = useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,6 +20,10 @@ const TextSender: React.FC<TextSenderProps> = ({ onSend }) => {
     }
     setText("");
   };
+
+  if (isSending) {
+    return <div>Sending...</div>;
+  }
 
   return (
     <div>

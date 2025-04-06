@@ -28,4 +28,8 @@ export const rules: Required<ModuleOptions>["rules"] = [
       },
     },
   },
+  {
+    test: /\.(woff(2)?|eot|ttf|otf)$/,
+    type: "asset/resource",
+  },
 ];

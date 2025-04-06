@@ -28,12 +28,10 @@ class Logger {
 }
 
 function info(msg) {
-  console.log(msg);
   Logger.getLogger().logger.info(msg);
 }
 
 function error(msg) {
-  console.log(msg);
   Logger.getLogger().logger.error(msg);
 }
 

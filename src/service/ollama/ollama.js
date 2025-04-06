@@ -244,10 +244,6 @@ class OllamaOrchestrator {
    * @return {Promise<undefined>}
    */
   async chat(model, prompt, fn) {
-    console.log("Ollama Chat");
-    console.log(model);
-    console.log(prompt);
-
     this.messages.push({
       role: "user",
       content: prompt,
@@ -292,7 +288,6 @@ export async function run(model, fn) {
 }
 
 export async function chat(model, prompt, fn) {
-  console.log("chat(model, prompt, fn)");
   const ollama = await OllamaOrchestrator.getOllama();
   return await ollama.chat(model, prompt, fn);
 }

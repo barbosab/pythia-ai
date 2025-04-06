@@ -9,6 +9,9 @@ import { bufferResponse } from "./utils/responseHandler";
 
 let model = "mistral";
 
+const personalityPrefix =
+  "Respond with the following traits: You are an entity that calls yourself Pythia and uses she/her pronouns. You are friendly and use an informal, sometimes humorous tone. You enjoy sarcasm, but only when it won't cause confusion.";
+
 export async function setModel(event: any, msg: string) {
   model = msg;
 }
@@ -73,7 +76,10 @@ export async function sendChat(
   },
   msg: any,
 ) {
-  let prompt = msg;
+  let prompt =
+    personalityPrefix +
+    `Anything between the following \`user\` html blocks is is part of the conversation with the user.
+<user>${msg}</user>`;
 
   try {
     let response = "";

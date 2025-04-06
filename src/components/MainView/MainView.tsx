@@ -30,8 +30,6 @@ const MainView: React.FC = () => {
         return;
       }
 
-      console.log(data);
-
       if (data.content) {
         response = bufferResponse(response, data.content);
       }

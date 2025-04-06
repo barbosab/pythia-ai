@@ -30,11 +30,13 @@ const MainView: React.FC = () => {
         return;
       }
 
-      if (data.content.message.content) {
-        response = bufferResponse(response, data.content.message.content);
+      console.log(data);
+
+      if (data.content) {
+        response = bufferResponse(response, data.content);
       }
 
-      if (data.content.done) {
+      if (data.content) {
         addAnswer(response);
         setAnswers([...getAnswers()]);
         setSending(false);

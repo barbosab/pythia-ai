@@ -5,6 +5,7 @@ import {
   stopProcess,
   serve,
 } from "./service/ollama/ollama.js";
+import { bufferResponse } from "./utils/responseHandler";
 
 let model = "mistral";
 
@@ -75,10 +76,16 @@ export async function sendChat(
   let prompt = msg;
 
   try {
+    let response = "";
+
     await chat(model, prompt, (json: any) => {
-      // Reply with the content every time we receive data
-      event.reply("chat:reply", { success: true, content: json });
+      // Buffer the string to send back one message
+      if (json.message.content) {
+        response = bufferResponse(response, json.message.content);
+      }
     });
+
+    event.reply("chat:reply", { success: true, content: response });
   } catch (err) {
     console.log(err);
     event.reply("chat:reply", { success: false, content: err.message });

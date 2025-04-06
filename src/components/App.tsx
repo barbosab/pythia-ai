@@ -5,6 +5,8 @@ import InitView from "./InitView/InitView";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "../styles/MysticalTheme";
 
+import "../index.css";
+
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("Turning on the big brain...");

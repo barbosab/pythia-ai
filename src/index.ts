@@ -1,4 +1,4 @@
-import { app, BrowserWindow, session, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 // const os = require("os");
 // const winston = require("winston");
 import {

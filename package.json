@@ -7,6 +7,7 @@
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
+    "package_debug": "DEBUG=electron-notarize* electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx .",
@@ -39,6 +40,7 @@
     "@typescript-eslint/parser": "^5.62.0",
     "@vercel/webpack-asset-relocator-loader": "^1.7.3",
     "css-loader": "^6.11.0",
+    "dotenv": "^16.4.7",
     "electron": "35.0.2",
     "eslint": "^8.57.1",
     "eslint-plugin-import": "^2.31.0",

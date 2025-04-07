@@ -12,6 +12,9 @@ import { mainConfig } from "./webpack.main.config";
 import { rendererConfig } from "./webpack.renderer.config";
 
 import path from "path";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const config: ForgeConfig = {
   packagerConfig: {
@@ -20,6 +23,14 @@ const config: ForgeConfig = {
     extraResource: [
       path.join(__dirname, "/src/service/ollama/runners/ollama-darwin"),
     ],
+    osxSign: {
+      identity: process.env.APPLE_IDENTITY,
+    },
+    osxNotarize: {
+      appleApiKey: process.env.APPLE_API_KEY || "default_api_key",
+      appleApiKeyId: process.env.APPLE_API_KEY_ID || "default_api_key_id",
+      appleApiIssuer: process.env.APPLE_API_ISSUER || "default_api_key_id",
+    },
   },
   rebuildConfig: {},
   makers: [

@@ -10,9 +10,6 @@ declare global {
       onOllamaServe: (callback: (event: any, data: any) => void) => void;
       runOllama: () => void;
       onOllamaRun: (callback: (event: any, data: any) => void) => void;
-      getModel: () => void;
-      onModelGet: (callback: (event: any, data: any) => void) => void;
-      setModel: (model: string) => void;
     };
   }
 }

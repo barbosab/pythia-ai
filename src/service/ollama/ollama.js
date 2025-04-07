@@ -36,6 +36,7 @@ class OllamaOrchestrator {
    */
   async serve() {
     logInfo("serving ollama");
+
     try {
       // see if ollama is already running
       await this.ping();

@@ -2,8 +2,6 @@ import { app, BrowserWindow, ipcMain } from "electron";
 // const os = require("os");
 // const winston = require("winston");
 import {
-  getModel,
-  setModel,
   sendChat,
   stopChat,
   serveOllama,
@@ -48,8 +46,6 @@ const createWindow = (): void => {
 app.on("ready", () => {
   // Add a handler for the interprocess events. This enables 2-way communication
   // between the renderer process (UI) and the main process.
-  ipcMain.on("model:set", setModel);
-  ipcMain.on("model:get", getModel);
   ipcMain.on("chat:send", sendChat);
   ipcMain.on("chat:stop", stopChat);
   ipcMain.on("ollama:serve", serveOllama);

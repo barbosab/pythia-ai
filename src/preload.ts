@@ -25,11 +25,4 @@ contextBridge.exposeInMainWorld("electronAPI", {
       callback(event, data);
     });
   },
-  getModel: () => ipcRenderer.send("model:get"),
-  onModelGet: (callback: (arg0: any, arg1: any) => void) => {
-    ipcRenderer.on("model:get", (event: any, data: any) => {
-      callback(event, data);
-    });
-  },
-  setModel: (model: any) => ipcRenderer.send("model:set", model),
 });

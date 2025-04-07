@@ -6,21 +6,7 @@ import {
   serve,
 } from "./service/ollama/ollama.js";
 import { bufferResponse } from "./utils/responseHandler";
-
-let model = "mistral";
-
-const personalityPrefix =
-  "Respond with the following traits: You are an entity that calls yourself Pythia and uses she/her pronouns. You are friendly and use an informal, sometimes humorous tone. You enjoy sarcasm, but only when it won't cause confusion.";
-
-export async function setModel(event: any, msg: string) {
-  model = msg;
-}
-
-export async function getModel(event: {
-  reply: (arg0: string, arg1: { success: boolean; content: string }) => void;
-}) {
-  event.reply("model:get", { success: true, content: model });
-}
+import { getConfigData } from "./service/config/config";
 
 export async function runOllamaModel(
   event: {
@@ -29,9 +15,12 @@ export async function runOllamaModel(
   msg: any,
 ) {
   try {
+    const configData = getConfigData();
+    console.log(configData.model);
+
     // send an empty message to the model to load it into memory
     await run(
-      model,
+      configData.model,
       (json: {
         status: string | string[];
         completed: number;
@@ -76,15 +65,17 @@ export async function sendChat(
   },
   msg: any,
 ) {
+  const configData = getConfigData();
+
   let prompt =
-    personalityPrefix +
+    configData.personalityPrefix +
     `Anything between the following \`user\` html blocks is is part of the conversation with the user.
 <user>${msg}</user>`;
 
   try {
     let response = "";
 
-    await chat(model, prompt, (json: any) => {
+    await chat(configData.model, prompt, (json: any) => {
       // Buffer the string to send back one message
       if (json.message.content) {
         response = bufferResponse(response, json.message.content);

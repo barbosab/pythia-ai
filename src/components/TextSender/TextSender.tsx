@@ -41,8 +41,9 @@ const TextSender: React.FC<TextSenderProps> = ({ onSend, isSending }) => {
       style={{
         maxWidth: "800px",
         margin: "0 auto",
-        paddingTop: "32px",
         paddingBottom: "32px",
+        paddingLeft: "16px",
+        paddingRight: "16px",
       }}
     >
       <TextField

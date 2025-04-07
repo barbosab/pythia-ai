@@ -8,7 +8,11 @@ interface TextHistoryProps {
 
 const TextHistory: React.FC<TextHistoryProps> = ({ questions, answers }) => {
   return (
-    <div>
+    <div
+      style={{
+        padding: "20px",
+      }}
+    >
       {questions.map((question, index) => (
         <div key={index}>
           <ChatMessage message={question} sender={"user"} />

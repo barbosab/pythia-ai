@@ -107,3 +107,14 @@ export async function serveOllama(event: {
 export function stopOllama(event: any) {
   stopProcess();
 }
+
+export async function requestConfig(event: {
+  reply: (arg0: string, arg1: { success: boolean; content: any }) => void;
+}) {
+  try {
+    const configData = getConfigData();
+    event.reply("config:get", { success: true, content: configData });
+  } catch (err) {
+    console.log(err);
+  }
+}

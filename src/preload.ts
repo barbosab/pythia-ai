@@ -25,4 +25,15 @@ contextBridge.exposeInMainWorld("electronAPI", {
       callback(event, data);
     });
   },
+  requestConfig: () => {
+    console.log("called request config");
+    ipcRenderer.send("config:request");
+  },
+  onConfigReply: (
+    callback: (event: Electron.IpcRendererEvent, ...args: any[]) => void,
+  ) =>
+    ipcRenderer.on("config:get", (event: any, data: any) => {
+      console.log("config:get event received");
+      callback(event, data);
+    }),
 });

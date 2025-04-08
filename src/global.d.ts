@@ -10,6 +10,8 @@ declare global {
       onOllamaServe: (callback: (event: any, data: any) => void) => void;
       runOllama: () => void;
       onOllamaRun: (callback: (event: any, data: any) => void) => void;
+      requestConfig: () => void;
+      onConfigReply: (callback: (event: any, data: any) => void) => void;
     };
   }
 }

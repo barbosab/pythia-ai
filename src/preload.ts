@@ -38,4 +38,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   setConfig: (configData: ConfigFile) => {
     ipcRenderer.send("config:set", configData);
   },
+  addToVectra: (csvContent: string) => {
+    ipcRenderer.send("vectra:addcsv", csvContent);
+  },
 });

@@ -12,7 +12,7 @@ import {
   getConfigData,
   writeConfigFile,
 } from "./service/config/config";
-import { initIndex, queryVectra } from "./service/vectra/vectra.js";
+import { addItem, initIndex, queryVectra } from "./service/vectra/vectra";
 
 export async function runOllamaModel(
   event: {
@@ -177,5 +177,17 @@ export async function setConfig(
     event.reply("config:set", { success: true, content: configData });
   } catch (err) {
     console.log(err);
+  }
+}
+
+export async function addToVectra(
+  event: {
+    reply: (arg0: string, arg1: { success: boolean; content: any }) => void;
+  },
+  csvContent: string,
+) {
+  const lines = csvContent.split("\n");
+  for (const line of lines) {
+    addItem(line);
   }
 }

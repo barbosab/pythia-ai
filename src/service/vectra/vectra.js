@@ -22,7 +22,8 @@ export async function initIndex() {
   }
 }
 
-async function addItem(text) {
+export async function addItem(text) {
+  console.log("adding line");
   await index.insertItem({
     vector: await generateEmbedding(text),
     metadata: { text },
@@ -32,7 +33,7 @@ async function addItem(text) {
 export async function queryVectra(text, embeddings) {
   let data = "";
   const vector = await generateEmbedding(text);
-  const results = await index.queryItems(vector, 5);
+  const results = await index.queryItems(vector, 3);
 
   if (results.length > 0) {
     for (const result of results) {

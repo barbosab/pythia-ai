@@ -13,6 +13,7 @@ declare global {
       requestConfig: () => void;
       onConfigReply: (callback: (event: any, data: any) => void) => void;
       setConfig: (configData: ConfigFile) => void;
+      addToVectra: (csvContent: any) => void;
     };
   }
 }

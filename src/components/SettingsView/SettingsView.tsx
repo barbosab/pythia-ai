@@ -96,6 +96,43 @@ const SettingsView: React.FC<SettingsProps> = ({ onSettingsClick }) => {
             Save Config Changes
           </Button>
         </div>
+        <div style={{ padding: "20px" }}>
+          <h1>Upload to Vector Database</h1>
+          <div style={{ paddingBottom: "20px" }}>
+            This takes a csv file with a single string on each line and no
+            header. Each line will be added as an entry to the Vectra vector
+            database to be used by the AI.
+          </div>
+          <input
+            accept=".csv"
+            style={{ display: "none" }}
+            id="upload-csv"
+            type="file"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                  const csvContent = event.target?.result;
+                  // console.log("CSV Content:", csvContent);
+                  if (typeof csvContent === "string") {
+                    console.log("CSV content is a string.");
+                    window.electronAPI.addToVectra(csvContent);
+                  } else {
+                    console.error("CSV content is not a string.");
+                  }
+                  console.log("CSV file sent to Vectra");
+                };
+                reader.readAsText(file);
+              }
+            }}
+          />
+          <label htmlFor="upload-csv">
+            <Button variant="contained" color="secondary" component="span">
+              Upload CSV
+            </Button>
+          </label>
+        </div>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer } from "electron";
+import { ConfigFile } from "./service/config/config";
 
 // Here, we use the `contextBridge` API to expose a custom API to the renderer process.
 // This API allows the renderer process to invoke events in the main process which interact with the operating system.
@@ -26,14 +27,15 @@ contextBridge.exposeInMainWorld("electronAPI", {
     });
   },
   requestConfig: () => {
-    console.log("called request config");
     ipcRenderer.send("config:request");
   },
   onConfigReply: (
     callback: (event: Electron.IpcRendererEvent, ...args: any[]) => void,
   ) =>
     ipcRenderer.on("config:get", (event: any, data: any) => {
-      console.log("config:get event received");
       callback(event, data);
     }),
+  setConfig: (configData: ConfigFile) => {
+    ipcRenderer.send("config:set", configData);
+  },
 });

@@ -6,7 +6,11 @@ import {
   serve,
 } from "./service/ollama/ollama.js";
 import { bufferResponse } from "./utils/responseHandler";
-import { getConfigData } from "./service/config/config";
+import {
+  ConfigFile,
+  getConfigData,
+  writeConfigFile,
+} from "./service/config/config";
 
 export async function runOllamaModel(
   event: {
@@ -16,7 +20,6 @@ export async function runOllamaModel(
 ) {
   try {
     const configData = getConfigData();
-    console.log(configData.model);
 
     // send an empty message to the model to load it into memory
     await run(
@@ -114,6 +117,20 @@ export async function requestConfig(event: {
   try {
     const configData = getConfigData();
     event.reply("config:get", { success: true, content: configData });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function setConfig(
+  event: {
+    reply: (arg0: string, arg1: { success: boolean; content: any }) => void;
+  },
+  configData: ConfigFile,
+) {
+  try {
+    writeConfigFile(configData);
+    event.reply("config:set", { success: true, content: configData });
   } catch (err) {
     console.log(err);
   }

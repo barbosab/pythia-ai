@@ -2,7 +2,7 @@ import { app } from "electron";
 import path from "path";
 import fs from "fs";
 
-interface ConfigFile {
+export interface ConfigFile {
   model: string;
   personalityPrefix: string;
 }

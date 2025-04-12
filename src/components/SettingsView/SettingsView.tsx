@@ -83,7 +83,10 @@ const SettingsView: React.FC<SettingsProps> = ({ onSettingsClick }) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => console.log("TODO - need to save config")}
+            onClick={() => {
+              window.electronAPI.setConfig(configDataState);
+              window.electronAPI.requestConfig();
+            }}
             disabled={
               configDataState.model === savedConfigDataState.model &&
               configDataState.personalityPrefix ===

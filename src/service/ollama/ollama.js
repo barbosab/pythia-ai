@@ -83,14 +83,11 @@ class OllamaOrchestrator {
     }
 
     // Find Path to the binary
-    // TODO - this might need reworking for production
     let basePath = process["resourcesPath"];
     if (process.env.NODE_ENV === "development") {
-      console.log("Running in development mode");
       const __filename = fileURLToPath(import.meta.url);
       basePath = path.join(dirname(__filename), "runners");
     } else {
-      console.log("Running in production mode");
       basePath = process["resourcesPath"];
     }
 

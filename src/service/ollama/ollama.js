@@ -10,6 +10,8 @@ export const OllamaServeType = {
   PACKAGED: "packaged", // ollama is packaged with the app
 };
 
+const embeddingModel = "mxbai-embed-large";
+
 class OllamaOrchestrator {
   static instance = null;
 
@@ -161,7 +163,7 @@ class OllamaOrchestrator {
       if (!err.message.includes("pull model manifest")) {
         throw err;
       }
-      logInfo("ai-butler is running offline, failed to pull");
+      logInfo("pythia-ai is running offline, failed to pull");
     }
     // load the model
     const loaded = await this.ollama.chat({ model: model });
@@ -230,6 +232,19 @@ class OllamaOrchestrator {
     throw new Error("Max retries reached. Ollama server didn't respond.");
   }
 
+  async generateEmbedding(text) {
+    try {
+      const embedding = await this.ollama.embeddings({
+        model: embeddingModel,
+        prompt: text,
+      });
+      return embedding.embedding;
+    } catch (error) {
+      console.error("Error generating embedding:", error);
+      throw error;
+    }
+  }
+
   /**
    * Sends a chat to the LLM and runs a callback.
    *
@@ -280,6 +295,11 @@ class OllamaOrchestrator {
   }
 }
 
+export async function pull(model, fn) {
+  const ollama = await OllamaOrchestrator.getOllama();
+  return await ollama.pull(model, fn);
+}
+
 export async function run(model, fn) {
   const ollama = await OllamaOrchestrator.getOllama();
   return await ollama.run(model, fn);
@@ -303,4 +323,9 @@ export async function stopProcess() {
 export async function serve() {
   const ollama = await OllamaOrchestrator.getOllama();
   return await ollama.serve();
+}
+
+export async function generateEmbedding(text) {
+  const ollama = await OllamaOrchestrator.getOllama();
+  return await ollama.generateEmbedding(text);
 }

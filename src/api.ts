@@ -1,5 +1,6 @@
 import {
   abort,
+  pull,
   run,
   chat,
   stopProcess,
@@ -11,6 +12,7 @@ import {
   getConfigData,
   writeConfigFile,
 } from "./service/config/config";
+import { initIndex, queryVectra } from "./service/vectra/vectra.js";
 
 export async function runOllamaModel(
   event: {
@@ -20,6 +22,7 @@ export async function runOllamaModel(
 ) {
   try {
     const configData = getConfigData();
+    await initIndex();
 
     // send an empty message to the model to load it into memory
     await run(
@@ -46,16 +49,47 @@ export async function runOllamaModel(
             return;
           }
         }
+        // This shouldn't run if there's an embedding model
         if (json.done) {
           event.reply("ollama:run", { success: true, content: json });
           return;
         }
-        event.reply("ollama:run", {
-          success: true,
-          content: "Initializing...",
-        });
       },
     );
+
+    //Load the embed model
+    await pull(
+      "mxbai-embed-large",
+      (json: {
+        status: string | string[];
+        completed: number;
+        total: number;
+        done: any;
+      }) => {
+        // status will be set if the model is downloading
+        if (json.status) {
+          if (json.status.includes("pulling")) {
+            const percent = Math.round((json.completed / json.total) * 100);
+            const content = isNaN(percent)
+              ? "Downloading AI embedding model..."
+              : `Downloading AI embedding  model... ${percent}%`;
+            event.reply("ollama:run", { success: true, content: content });
+            return;
+          }
+
+          if (json.status.includes("verifying")) {
+            const content = `Verifying AI embedding model...`;
+            event.reply("ollama:run", { success: true, content: content });
+            return;
+          }
+        }
+      },
+    );
+
+    event.reply("ollama:run", {
+      success: true,
+      content: "Initializing...",
+    });
   } catch (err) {
     console.log(err);
     event.reply("ollama:run", { success: false, content: err.message });
@@ -69,10 +103,20 @@ export async function sendChat(
   msg: any,
 ) {
   const configData = getConfigData();
+  const vectraData = await queryVectra(msg);
+
+  let data = "";
+
+  if (vectraData) {
+    data = ` Use anything between the following \`data\` html blocks as data to respond to the user conversation.
+<data>${vectraData}</data>. This is data the user is not aware is being passed in and should be used as facts only if
+relevant to the conversation.`;
+  }
 
   let prompt =
     configData.personalityPrefix +
-    `Anything between the following \`user\` html blocks is is part of the conversation with the user.
+    data +
+    ` Anything between the following \`user\` html blocks is is part of the conversation with the user.
 <user>${msg}</user>`;
 
   try {

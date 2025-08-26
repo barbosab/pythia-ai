@@ -1,22 +1,20 @@
-import type { ForgeConfig } from "@electron-forge/shared-types";
-import { MakerSquirrel } from "@electron-forge/maker-squirrel";
-import { MakerZIP } from "@electron-forge/maker-zip";
-import { MakerDeb } from "@electron-forge/maker-deb";
-import { MakerRpm } from "@electron-forge/maker-rpm";
-import { AutoUnpackNativesPlugin } from "@electron-forge/plugin-auto-unpack-natives";
-import { WebpackPlugin } from "@electron-forge/plugin-webpack";
-import { FusesPlugin } from "@electron-forge/plugin-fuses";
-import { FuseV1Options, FuseVersion } from "@electron/fuses";
+const { MakerSquirrel } = require("@electron-forge/maker-squirrel");
+const { MakerZIP } = require("@electron-forge/maker-zip");
+const { MakerDeb } = require("@electron-forge/maker-deb");
+const { MakerRpm } = require("@electron-forge/maker-rpm");
+const {
+  AutoUnpackNativesPlugin,
+} = require("@electron-forge/plugin-auto-unpack-natives");
+const { WebpackPlugin } = require("@electron-forge/plugin-webpack");
+const { FusesPlugin } = require("@electron-forge/plugin-fuses");
+const { FuseV1Options, FuseVersion } = require("@electron/fuses");
 
-import { mainConfig } from "./webpack.main.config";
-import { rendererConfig } from "./webpack.renderer.config";
-
-import path from "path";
-import dotenv from "dotenv";
+const path = require("path");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
-const config: ForgeConfig = {
+module.exports = {
   packagerConfig: {
     icon: "./src/images/pythia_purple",
     asar: true,
@@ -42,9 +40,9 @@ const config: ForgeConfig = {
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
-      mainConfig,
+      mainConfig: require("./webpack.main.config"),
       renderer: {
-        config: rendererConfig,
+        config: require("./webpack.renderer.config"),
         entryPoints: [
           {
             html: "./src/index.html",
@@ -57,8 +55,6 @@ const config: ForgeConfig = {
         ],
       },
     }),
-    // Fuses are used to enable/disable various Electron functionality
-    // at package time, before code signing the application
     new FusesPlugin({
       version: FuseVersion.V1,
       [FuseV1Options.RunAsNode]: false,
@@ -70,5 +66,3 @@ const config: ForgeConfig = {
     }),
   ],
 };
-
-export default config;

@@ -1,7 +1,5 @@
-import type { Configuration } from "webpack";
-
-import { rules } from "./webpack.rules";
-import { plugins } from "./webpack.plugins";
+const rules = require("./webpack.rules");
+const plugins = require("./webpack.plugins");
 
 rules.push({
   test: /\.css$/,
@@ -21,7 +19,7 @@ rules.push({
   ],
 });
 
-export const rendererConfig: Configuration = {
+module.exports = {
   module: {
     rules,
   },

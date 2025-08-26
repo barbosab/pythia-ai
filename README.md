@@ -33,7 +33,7 @@ However, to distribute to other computers, you need to sign the distributable. T
 
 Pythia depends on several open-source projects to function. While this doesn’t list every npm package used, it highlights the major ones.
 
-- [Ollama](https://ollama.com/)
+- [Ollama](https://ollama.com/) - current packaged version is [v0.11.7](https://github.com/ollama/ollama/releases/tag/v0.11.7).
 - [Electron](https://www.electronjs.org/)
 - [MUI](https://mui.com/)
 - Special thanks to [chatd](https://github.com/BruceMacD/chatd), which was used as an example of how to embed Ollama in an Electron app.

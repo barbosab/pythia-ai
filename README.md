@@ -8,7 +8,7 @@ This project aims to keep all data used by the AI stored locally and rely solely
 
 ### Running locally
 
-Make sure you have NPM and node installed, and from the root `pythia-ai` directorty, run the following:
+Make sure you have NPM and node installed, and from the root `pythia-ai` directory, run the following:
 
 - npm install
 - npm start
